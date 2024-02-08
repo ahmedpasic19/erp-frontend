@@ -42,7 +42,7 @@ const SelectField = <
                   {...field}
                   {...props}
                   styles={{
-                     control: provided => ({
+                     control: (provided) => ({
                         ...provided,
                         borderRadius: '4px',
                         boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
@@ -67,11 +67,11 @@ const SelectField = <
                            ? 'white'
                            : '#333',
                      }),
-                     singleValue: provided => ({
+                     singleValue: (provided) => ({
                         ...provided,
                         color: isDarkMode ? '#9B9B9B' : 'gray',
                      }),
-                     menu: provided => ({
+                     menu: (provided) => ({
                         ...provided,
                         backgroundColor: isDarkMode ? '3B3B3B' : 'white',
                      }),
