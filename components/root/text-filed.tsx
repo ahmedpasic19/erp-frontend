@@ -20,7 +20,7 @@ const TextField = ({ label, ...props }: TProps) => {
          <input
             {...register(props.name || '')}
             {...props}
-            className="rounded-md border-2 border-gray-50 dark:border-my-gray-300 p-2 text-gray-900 outline-none placeholder:text-gray-400 dark:text-my-gray-900 placeholder:dark:text-my-gray-900"
+            className="rounded-md border-2 border-gray-100 dark:border-my-gray-300 p-2 text-gray-900 outline-none placeholder:text-gray-400 dark:text-my-gray-900 placeholder:dark:text-my-gray-900"
          />
          {errors?.[props.name || ''] && (
             <p className="select-none text-sm text-red-600">
