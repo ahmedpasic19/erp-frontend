@@ -5,15 +5,15 @@ interface TProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    white?: boolean
 }
 
-const Button = (props: TProps) => {
+const Button = ({ isLoading, ...props }: TProps) => {
    return (
       <button
          className={`w-full rounded-md ${
-            props.white ? ' border-2 border-black bg-white text-black dark:text-black' : 'bg-black'
+            props.white ? ' border-2 border-black bg-white text-black' : 'bg-black'
          } p-2 text-white disabled:bg-gray-600`}
          {...props}
       >
-         {!props.isLoading ? props.children : 'Loading...'}
+         {!isLoading ? props.children : 'Loading...'}
       </button>
    )
 }

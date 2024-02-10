@@ -8,6 +8,10 @@ const Sidebar = () => {
          title: 'Home',
          href: '/',
       },
+      {
+         title: 'Companies',
+         href: '/companies',
+      },
    ]
 
    return (
@@ -16,7 +20,7 @@ const Sidebar = () => {
             ERP
          </h3>
          <ul className="flex flex-col w-full gap-4">
-            {pages.map(page => (
+            {pages.map((page) => (
                <Link key={Math.random()} href={page.href} className="capitalize">
                   {page.title}
                </Link>
