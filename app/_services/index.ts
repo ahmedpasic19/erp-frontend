@@ -8,5 +8,5 @@ export const api = createApi({
       baseUrl: `${env.NEXT_PUBLIC_BASEAPI}/api`,
    }),
    endpoints: () => ({}),
-   tagTypes: ['Company'],
+   tagTypes: ['Company', 'User'],
 })
