@@ -19,7 +19,7 @@ const EditCompanyModal = () => {
 
    return (
       <Modal open={companyId ? true : false} onOpenChange={() => router.back()}>
-         <Modal.Content title="Edit youre company" desc="Here is where you can edit youre company.">
+         <Modal.Content title="Edit your company" desc="Here is where you can edit your company.">
             <CompaniesForm isEdit company={data?.company || ({} as Company)} />
          </Modal.Content>
       </Modal>

@@ -4,22 +4,22 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-import { useDelteCompanyMutation } from '@/app/_services/basic/companies-api'
+import { useDelteUserMutation } from '@/app/_services/basic/users-api'
 import Button from '@/components/root/button'
 import Modal from '@/components/root/modal'
 
-const DeleteCompanyModal = () => {
+const DeleteUserModal = () => {
    const searchParams = useSearchParams()
    const router = useRouter()
 
-   const companyId = searchParams.get('dId')
+   const userId = searchParams.get('dId')
 
-   const [deleteCompany, { isLoading: loadingDelete }] = useDelteCompanyMutation()
+   const [deleteUser, { isLoading: loadingDelete }] = useDelteUserMutation()
 
    const handleDelete = async () => {
       try {
-         if (companyId) {
-            await deleteCompany({ id: +companyId }).unwrap()
+         if (userId) {
+            await deleteUser({ id: +userId }).unwrap()
             toast.success('Deleted successfuly')
             router.back()
          }
@@ -30,11 +30,8 @@ const DeleteCompanyModal = () => {
    }
 
    return (
-      <Modal open={companyId ? true : false} onOpenChange={() => router.back()}>
-         <Modal.Content
-            title="Delete your company"
-            desc="Here is where you can delete your company."
-         >
+      <Modal open={userId ? true : false} onOpenChange={() => router.back()}>
+         <Modal.Content title="Delete your user" desc="Here is where you can delete your user.">
             <div className="flex justify-between gap-4">
                <Button white onClick={() => router.back()}>
                   Cancel
@@ -48,4 +45,4 @@ const DeleteCompanyModal = () => {
    )
 }
 
-export default DeleteCompanyModal
+export default DeleteUserModal

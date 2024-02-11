@@ -3,7 +3,7 @@ import { Company } from '../companies/companies.interface'
 import { UsersInCompanies } from '@/schemas/relations/users-in-companies.interface'
 
 export interface User {
-   is: number
+   id: number
    name: string
    password: string
    email: string

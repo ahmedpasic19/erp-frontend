@@ -12,6 +12,10 @@ const Sidebar = () => {
          title: 'Companies',
          href: '/companies',
       },
+      {
+         title: 'Users',
+         href: '/users',
+      },
    ]
 
    return (
