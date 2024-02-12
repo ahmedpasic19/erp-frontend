@@ -7,6 +7,8 @@ import React, { useMemo } from 'react'
 
 import Link from 'next/link'
 
+import DeleteCompanyModal from './modals/DeleteCompanyModal'
+import EditCompanyModal from './modals/EditCompanyModal'
 import { useGetAllCompaniesQuery } from '@/app/_services/basic/companies-api'
 import MainTable from '@/components/table/MainTable'
 import { Company } from '@/schemas/basic/companies/companies.interface'
@@ -25,13 +27,13 @@ const CompaniesTable = () => {
             header: 'Actions',
             accessorKey: 'actions',
             cell: ({ row }) => {
-               const category = row.original
+               const company = row.original
                return (
                   <div className="flex justify-center gap-2">
-                     <Link href={`?companyId=${category.id}`}>
+                     <Link href={`?companyId=${company.id}`}>
                         <Pencil1Icon className="dark:text-gray-200 w-5 h-5" />
                      </Link>
-                     <Link href={`?dId=${category.id}`}>
+                     <Link href={`?dId=${company.id}`}>
                         <TrashIcon className="dark:text-gray-200 w-5 h-5" />
                      </Link>
                   </div>
@@ -43,9 +45,12 @@ const CompaniesTable = () => {
    )
 
    return (
-      <div>
+      <>
          <MainTable data={tableData} columns={columns} showNavigation />
-      </div>
+
+         <EditCompanyModal />
+         <DeleteCompanyModal />
+      </>
    )
 }
 
