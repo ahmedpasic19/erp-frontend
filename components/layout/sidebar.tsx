@@ -16,6 +16,10 @@ const Sidebar = () => {
          title: 'Users',
          href: '/users',
       },
+      {
+         title: 'Articles',
+         href: '/articles',
+      },
    ]
 
    return (
