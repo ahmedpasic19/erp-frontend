@@ -1,11 +1,17 @@
-import type { AuthOptions } from 'next-auth'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { PrismaClient } from '@prisma/client'
+
+import type { AuthOptions, User } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 
+import { env as clientEnv } from '@/env/client.mjs'
 import { env } from '@/env/server.mjs'
 
+const db = new PrismaClient()
+
 export const options: AuthOptions = {
-   // adapter: DrizzleAdapter(db),
+   adapter: PrismaAdapter(db),
    providers: [
       GoogleProvider({
          clientId: env.GOOGLE_CLIENT_ID,
@@ -22,34 +28,64 @@ export const options: AuthOptions = {
          name: 'Credentials',
          credentials: {
             name: { label: 'Name', type: 'text', placeholder: 'jhondoe' },
-            email: { label: 'Email', type: 'text', placeholder: 'jhondoe@gmail.com' },
             password: { label: 'Password', type: 'password' },
          },
          // @ts-expect-error // credentials type
          async authorize(credentials) {
-            if (credentials?.email && credentials.password && credentials.name) {
+            const myHeaders = new Headers()
+            myHeaders.append('Content-Type', 'application/json')
+
+            const raw = JSON.stringify({
+               username: credentials?.name,
+               password: credentials?.password,
+            })
+
+            const requestOptions = {
+               method: 'POST',
+               headers: myHeaders,
+               body: raw,
+            }
+
+            const res = await fetch(
+               `${clientEnv.NEXT_PUBLIC_BASEAPI}/api/auth/login`,
+               requestOptions,
+            )
+
+            if (res.ok) {
+               const response = (await res.json()) as
+                  | { user: User; access_token: string }
+                  | undefined
+
                // check if user exists
-               return {
-                  email: credentials.email,
-                  name: credentials.name,
-                  id: Math.random(),
+               if (response?.user && response?.access_token) {
+                  return { ...response.user, access_token: response.access_token }
                }
+            } else {
+               // Return null if login fails
+               return null
             }
          },
       }),
    ],
    callbacks: {
       session: async ({ session, token }) => {
+         // get user companies
+         const userCompanies = await db.companies.findMany({
+            where: {
+               users_in_companies: {
+                  every: {
+                     user_id: token.uid as string,
+                  },
+               },
+            },
+         })
+
          if (session?.user) {
             session.user.id = token.uid
+            session.user.companies = userCompanies
          }
+
          return session
-      },
-      jwt: async ({ user, token }) => {
-         if (user) {
-            token.uid = user.id
-         }
-         return token
       },
    },
    session: {
