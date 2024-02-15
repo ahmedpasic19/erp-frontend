@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String    @id
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime
+  users              users     @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+  @@index([userId], map: "Account_userId_fkey")
+}
+
+model Session {
+  id           String   @id
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  users        users    @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "Session_userId_fkey")
+}
+
+model articles {
+  id                Int       @id @default(autoincrement())
+  name              String
+  code              String
+  price_without_vat Float     @default(0)
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now())
+  companies_id      Int
+  price_with_vat    Float     @default(0)
+  companies         companies @relation(fields: [companies_id], references: [id])
+
+  @@index([companies_id], map: "articles_companies_id_fkey")
+}
+
+model companies {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  articles           articles[]
+  users_in_companies users_in_companies[]
+}
+
+model users {
+  id                 String               @id
+  name               String?
+  email              String?              @unique
+  password           String
+  createdAt          DateTime             @default(now())
+  emailVerified      DateTime?
+  image              String?
+  updatedAt          DateTime             @default(now())
+  Account            Account[]
+  Session            Session[]
+  users_in_companies users_in_companies[]
+}
+
+model users_in_companies {
+  user_id    String
+  company_id Int
+  companies  companies @relation(fields: [company_id], references: [id])
+  users      users     @relation(fields: [user_id], references: [id])
+
+  @@id([user_id, company_id])
+  @@index([company_id], map: "users_in_companies_company_id_fkey")
+}
