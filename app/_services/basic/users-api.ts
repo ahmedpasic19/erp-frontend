@@ -21,7 +21,7 @@ export const usersApi = api.injectEndpoints({
          }),
          invalidatesTags: ['User'],
       }),
-      delteUser: builder.mutation<{ message: string }, { id: number }>({
+      delteUser: builder.mutation<{ message: string }, { id: string }>({
          query: ({ id }) => ({
             url: `/users/${id}`,
             method: 'DELETE',
@@ -34,7 +34,7 @@ export const usersApi = api.injectEndpoints({
          }),
          providesTags: ['User'],
       }),
-      getOneUser: builder.query<{ user: User }, { id: number }>({
+      getOneUser: builder.query<{ user: User }, { id: string }>({
          query: ({ id }) => ({
             url: `/users/${id}`,
          }),
