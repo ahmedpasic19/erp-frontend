@@ -40,7 +40,7 @@ const CompaniesForm = ({ isEdit, company }: TProps) => {
 
    const onSubmit: SubmitHandler<createCopmanySchema> = async (data) => {
       try {
-         // If companyId prop is present then use PUT
+         // If isEdit prop is present then use PUT
          if (isEdit && company) {
             await updateCompany({ body: { ...data, id: company.id } }).unwrap()
             router.back()

@@ -20,6 +20,10 @@ const Sidebar = () => {
          title: 'Articles',
          href: '/articles',
       },
+      {
+         title: 'Storages',
+         href: '/storages',
+      },
    ]
 
    return (
