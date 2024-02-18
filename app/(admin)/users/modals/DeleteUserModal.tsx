@@ -19,7 +19,7 @@ const DeleteUserModal = () => {
    const handleDelete = async () => {
       try {
          if (userId) {
-            await deleteUser({ id: +userId }).unwrap()
+            await deleteUser({ id: userId }).unwrap()
             toast.success('Deleted successfuly')
             router.back()
          }

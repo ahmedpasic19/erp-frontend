@@ -27,7 +27,7 @@ const UsersForm = ({ isEdit, user }: TProps) => {
       values: isEdit && user ? user : ({} as User),
    })
 
-   const { handleSubmit, reset, setValue, watch } = methods
+   const { handleSubmit, reset } = methods
 
    const router = useRouter()
 
@@ -37,6 +37,7 @@ const UsersForm = ({ isEdit, user }: TProps) => {
       companiesData?.companies?.map((company) => ({
          label: company.name,
          value: company.id,
+         company_id: company.id,
       })) || []
 
    const [createUser, { isLoading: loadingCreate }] = useCreateUserMutation()
@@ -44,7 +45,7 @@ const UsersForm = ({ isEdit, user }: TProps) => {
 
    const onSubmit: SubmitHandler<createUserSchema> = async (data) => {
       try {
-         // If userId prop is present then use PUT
+         // If isEdit prop is present then use PUT
          if (isEdit && user) {
             await updateUser({ body: { ...data, id: user.id } }).unwrap()
             router.back()
@@ -84,17 +85,7 @@ const UsersForm = ({ isEdit, user }: TProps) => {
                autoComplete="off"
                autoFocus={isEdit}
             />
-            <SelectField
-               label="Company"
-               name="companies_id"
-               options={companyOptions}
-               onChange={(option) => {
-                  if (option) setValue('companies_id', +option.value)
-               }}
-               value={
-                  companyOptions.find((company) => company.value === watch('companies_id')) || null
-               }
-            />
+            <SelectField label="Company" name="companies" options={companyOptions} isMulti />
             <div className="mt-6">
                <Button
                   type="submit"
