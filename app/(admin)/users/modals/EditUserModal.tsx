@@ -15,7 +15,7 @@ const EditUserModal = () => {
 
    const userId = searchParams.get('userId')
 
-   const { data } = useGetOneUserQuery({ id: +userId! }, { skip: !userId })
+   const { data } = useGetOneUserQuery({ id: userId! }, { skip: !userId })
 
    return (
       <Modal open={userId ? true : false} onOpenChange={() => router.back()}>
