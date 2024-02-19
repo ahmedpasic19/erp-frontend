@@ -24,7 +24,17 @@ type TProps = {
 const UsersForm = ({ isEdit, user }: TProps) => {
    const methods = useForm<createUserSchema>({
       resolver: zodResolver(isEdit ? updateUserSchema : createUserSchema),
-      values: isEdit && user ? user : ({} as User),
+      values:
+         isEdit && user
+            ? {
+                 ...user,
+                 companies: user.companies?.map(({ company }) => ({
+                    label: company.name,
+                    company_id: company.id,
+                    value: company.id,
+                 })),
+              }
+            : ({} as User),
    })
 
    const { handleSubmit, reset } = methods
