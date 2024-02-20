@@ -3,8 +3,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import './globals.css'
-import Navbar from '@/components/layout/navbar'
-import Sidebar from '@/components/layout/sidebar'
 import Providers from '@/components/providers'
 
 type TProps = {
@@ -24,14 +22,10 @@ export default function RootLayout(props: TProps) {
       <html lang="en" suppressHydrationWarning>
          <body className={inter.className}>
             <Providers>
-               <Navbar />
-               <div className="grid grid-cols-[minmax(15%,3rem)_auto]">
-                  <Sidebar />
-                  <main>
-                     {props.children}
-                     {props.modal}
-                  </main>
-               </div>
+               <main>
+                  {props.children}
+                  {props.modal}
+               </main>
             </Providers>
          </body>
       </html>

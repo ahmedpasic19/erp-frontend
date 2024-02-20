@@ -64,9 +64,9 @@ const CompanySelectForm = () => {
    }
 
    return (
-      <div className="w-full flex">
+      <div>
          <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-[20em]">
                <SelectField
                   label="Choose company"
                   options={companyOptions}
