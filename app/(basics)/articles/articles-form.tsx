@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import React from 'react'
 
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -12,9 +13,7 @@ import {
    useCreateArticleMutation,
    useUpdateArticleMutation,
 } from '@/app/_services/basic/articles-api'
-import { useGetAllCompaniesQuery } from '@/app/_services/basic/companies-api'
 import Button from '@/components/root/button'
-import SelectField from '@/components/root/select-field'
 import TextField from '@/components/root/text-filed'
 import { Article } from '@/schemas/basic/articles/articles.interface'
 import { createArticleSchema, updateArticleSchema } from '@/schemas/basic/articles/articles.schema'
@@ -25,22 +24,19 @@ type TProps = {
 }
 
 const ArticlesForm = ({ isEdit, article }: TProps) => {
+   const session = useSession()
+
    const methods = useForm<createArticleSchema>({
       resolver: zodResolver(isEdit ? updateArticleSchema : createArticleSchema),
-      values: isEdit && article ? article : ({} as Article),
+      values:
+         isEdit && article
+            ? article
+            : ({ companies_id: session?.data?.user.current_company_id } as Article),
    })
 
-   const { handleSubmit, reset, setValue, watch } = methods
+   const { handleSubmit, reset } = methods
 
    const router = useRouter()
-
-   const { data: companiesData } = useGetAllCompaniesQuery()
-
-   const companyOptions =
-      companiesData?.companies?.map((company) => ({
-         label: company.name,
-         value: company.id,
-      })) || []
 
    const [createArticle, { isLoading: loadingCreate }] = useCreateArticleMutation()
    const [updateArticle, { isLoading: loadingUpdate }] = useUpdateArticleMutation()
@@ -93,17 +89,6 @@ const ArticlesForm = ({ isEdit, article }: TProps) => {
                label="Price with VAT"
                autoComplete="off"
                autoFocus={isEdit}
-            />
-            <SelectField
-               label="Company"
-               name="companies_id"
-               options={companyOptions}
-               onChange={(option) => {
-                  if (option) setValue('companies_id', +option.value)
-               }}
-               value={
-                  companyOptions.find((company) => company.value === watch('companies_id')) || null
-               }
             />
             <div className="mt-6">
                <Button

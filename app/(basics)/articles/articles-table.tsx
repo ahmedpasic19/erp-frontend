@@ -5,6 +5,7 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import React, { useMemo } from 'react'
 
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 
 import DeleteArticleModal from './modals/DeleteArticleModal'
@@ -14,7 +15,16 @@ import MainTable from '@/components/table/MainTable'
 import { Article } from '@/schemas/basic/articles/articles.interface'
 
 const ArticlesTable = () => {
-   const { data } = useGetAllArticlesQuery({ companies_id: 1 })
+   const session = useSession()
+
+   const { data } = useGetAllArticlesQuery(
+      {
+         companies_id: session?.data?.user.current_company_id,
+      },
+      {
+         skip: !session?.data?.user.current_company_id,
+      },
+   )
 
    const tableData = useMemo(() => (Array.isArray(data?.articles) ? data?.articles : []), [data])
    const columns = useMemo<ColumnDef<Article>[]>(
