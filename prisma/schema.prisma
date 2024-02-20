@@ -55,6 +55,7 @@ model companies {
   id                 Int                  @id @default(autoincrement())
   name               String
   articles           articles[]
+  storages           storages[]
   users_in_companies users_in_companies[]
 }
 
@@ -67,6 +68,7 @@ model users {
   emailVerified      DateTime?
   image              String?
   updatedAt          DateTime             @default(now())
+  current_company_id Int?
   Account            Account[]
   Session            Session[]
   users_in_companies users_in_companies[]
@@ -80,4 +82,14 @@ model users_in_companies {
 
   @@id([user_id, company_id])
   @@index([company_id], map: "users_in_companies_company_id_fkey")
+}
+
+model storages {
+  id           Int       @id @default(autoincrement())
+  name         String
+  companies_id Int
+  created_at   DateTime  @default(now())
+  companies    companies @relation(fields: [companies_id], references: [id])
+
+  @@index([companies_id], map: "storages_companies_id_fkey")
 }

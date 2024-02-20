@@ -37,6 +37,12 @@ export const companiesApi = api.injectEndpoints({
          }),
          providesTags: ['Company'],
       }),
+      getAllUsersCompanies: builder.query<{ companies: Company[] }, { users_id: string }>({
+         query: ({ users_id }) => ({
+            url: `/companies/by-user/${users_id}`,
+         }),
+         providesTags: ['Company'],
+      }),
       getOneCompany: builder.query<{ company: Company }, { id: number }>({
          query: ({ id }) => ({
             url: `/companies/${id}`,
@@ -52,4 +58,5 @@ export const {
    useDelteCompanyMutation,
    useGetAllCompaniesQuery,
    useGetOneCompanyQuery,
+   useGetAllUsersCompaniesQuery,
 } = companiesApi
