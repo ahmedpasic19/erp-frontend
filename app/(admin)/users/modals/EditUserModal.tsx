@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 
 import UsersForm from '../users-form'
 
-import { useGetOneUserQuery } from '@/app/_services/basic/users-api'
 import Modal from '@/components/root/modal'
+import { useGetOneUserQuery } from '@/lib/_services/basic/users-api'
 import { User } from '@/schemas/basic/users/users.interface'
 
 const EditUserModal = () => {

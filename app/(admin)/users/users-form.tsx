@@ -8,11 +8,11 @@ import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { useGetAllCompaniesQuery } from '@/app/_services/basic/companies-api'
-import { useCreateUserMutation, useUpdateUserMutation } from '@/app/_services/basic/users-api'
 import Button from '@/components/root/button'
 import SelectField from '@/components/root/select-field'
 import TextField from '@/components/root/text-filed'
+import { useGetAllCompaniesQuery } from '@/lib/_services/basic/companies-api'
+import { useCreateUserMutation, useUpdateUserMutation } from '@/lib/_services/basic/users-api'
 import { User } from '@/schemas/basic/users/users.interface'
 import { createUserSchema, updateUserSchema } from '@/schemas/basic/users/users.schema'
 

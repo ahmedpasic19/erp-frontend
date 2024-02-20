@@ -4,9 +4,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-import { useDelteArticleMutation } from '@/app/_services/basic/articles-api'
 import Button from '@/components/root/button'
 import Modal from '@/components/root/modal'
+import { useDelteArticleMutation } from '@/lib/_services/basic/articles-api'
 
 const DeleteArticleModal = () => {
    const searchParams = useSearchParams()

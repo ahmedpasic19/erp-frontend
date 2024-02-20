@@ -7,7 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'
 
-import { store } from '@/app/_features/store'
+import { store } from '@/lib/_features/store'
 
 type TProps = {
    children: ReactNode

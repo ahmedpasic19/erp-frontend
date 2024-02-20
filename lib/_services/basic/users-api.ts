@@ -40,6 +40,24 @@ export const usersApi = api.injectEndpoints({
          }),
          providesTags: ['User'],
       }),
+      setCurrentCompany: builder.mutation<
+         { user: User; message: string },
+         { user_id: string; company_id: number }
+      >({
+         query: (body) => ({
+            url: `/users/set-current-company`,
+            method: 'PATCH',
+            body,
+         }),
+         invalidatesTags: ['User'],
+      }),
+      removeCurrentCompany: builder.mutation<{ user: User; message: 'string' }, { id: string }>({
+         query: ({ id }) => ({
+            url: `/users/remove-current-company/${id}`,
+            method: 'PATCH',
+         }),
+         invalidatesTags: ['User'],
+      }),
    }),
 })
 
@@ -49,4 +67,6 @@ export const {
    useDelteUserMutation,
    useGetAllUsersQuery,
    useGetOneUserQuery,
+   useSetCurrentCompanyMutation,
+   useRemoveCurrentCompanyMutation,
 } = usersApi

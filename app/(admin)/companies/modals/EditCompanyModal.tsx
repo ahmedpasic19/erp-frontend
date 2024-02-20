@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 
 import CompaniesForm from '../companies-form'
 
-import { useGetOneCompanyQuery } from '@/app/_services/basic/companies-api'
 import Modal from '@/components/root/modal'
+import { useGetOneCompanyQuery } from '@/lib/_services/basic/companies-api'
 import { Company } from '@/schemas/basic/companies/companies.interface'
 
 const EditCompanyModal = () => {

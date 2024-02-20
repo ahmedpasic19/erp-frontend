@@ -9,8 +9,8 @@ import Link from 'next/link'
 
 import DeleteUserModal from './modals/DeleteUserModal'
 import EditUserModal from './modals/EditUserModal'
-import { useGetAllUsersQuery } from '@/app/_services/basic/users-api'
 import MainTable from '@/components/table/MainTable'
+import { useGetAllUsersQuery } from '@/lib/_services/basic/users-api'
 import { User } from '@/schemas/basic/users/users.interface'
 
 const UsersTable = () => {

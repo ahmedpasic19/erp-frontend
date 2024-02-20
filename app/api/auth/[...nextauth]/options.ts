@@ -74,18 +74,30 @@ export const options: AuthOptions = {
             where: {
                users_in_companies: {
                   every: {
-                     user_id: token.uid as string,
+                     user_id: token.sub as string,
                   },
                },
             },
          })
 
+         // GET logged in user
+         const oneUser = await db.users.findUnique({
+            where: { id: token.sub },
+         })
+
          if (session?.user) {
-            session.user.id = token.uid
+            session.user.id = token.sub
             session.user.companies = userCompanies
+            session.user.current_company_id = oneUser?.current_company_id
          }
 
          return session
+      },
+      redirect: () => {
+         return '/company-select'
+      },
+      jwt: async ({ token }) => {
+         return token
       },
    },
    session: {
