@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 
 import ArticlesForm from '../articles-form'
 
-import { useGetOneArticleQuery } from '@/app/_services/basic/articles-api'
 import Modal from '@/components/root/modal'
+import { useGetOneArticleQuery } from '@/lib/_services/basic/articles-api'
 import { Article } from '@/schemas/basic/articles/articles.interface'
 
 const EditArticleModal = () => {

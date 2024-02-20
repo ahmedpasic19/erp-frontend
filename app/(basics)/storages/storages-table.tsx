@@ -9,8 +9,8 @@ import Link from 'next/link'
 
 import DeleteStorageModal from './modals/DeleteStorageModal'
 import EditStorageModal from './modals/EditStorageModal'
-import { useGetAllCompaniesStoragesQuery } from '@/app/_services/basic/storages-api'
 import MainTable from '@/components/table/MainTable'
+import { useGetAllCompaniesStoragesQuery } from '@/lib/_services/basic/storages-api'
 import { Storage } from '@/schemas/basic/storages/storages.interface'
 
 const StoragesTable = () => {

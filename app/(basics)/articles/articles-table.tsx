@@ -10,8 +10,8 @@ import Link from 'next/link'
 
 import DeleteArticleModal from './modals/DeleteArticleModal'
 import EditArticleModal from './modals/EditArticleModal'
-import { useGetAllArticlesQuery } from '@/app/_services/basic/articles-api'
 import MainTable from '@/components/table/MainTable'
+import { useGetAllArticlesQuery } from '@/lib/_services/basic/articles-api'
 import { Article } from '@/schemas/basic/articles/articles.interface'
 
 const ArticlesTable = () => {

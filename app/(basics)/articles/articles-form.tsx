@@ -9,12 +9,12 @@ import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
+import Button from '@/components/root/button'
+import TextField from '@/components/root/text-filed'
 import {
    useCreateArticleMutation,
    useUpdateArticleMutation,
-} from '@/app/_services/basic/articles-api'
-import Button from '@/components/root/button'
-import TextField from '@/components/root/text-filed'
+} from '@/lib/_services/basic/articles-api'
 import { Article } from '@/schemas/basic/articles/articles.interface'
 import { createArticleSchema, updateArticleSchema } from '@/schemas/basic/articles/articles.schema'
 

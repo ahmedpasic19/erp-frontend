@@ -9,12 +9,12 @@ import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
+import Button from '@/components/root/button'
+import TextField from '@/components/root/text-filed'
 import {
    useCreateStorageMutation,
    useUpdateStorageMutation,
-} from '@/app/_services/basic/storages-api'
-import Button from '@/components/root/button'
-import TextField from '@/components/root/text-filed'
+} from '@/lib/_services/basic/storages-api'
 import { Storage } from '@/schemas/basic/storages/storages.interface'
 import { createStorageSchema, updateStorageSchema } from '@/schemas/basic/storages/storages.schema'
 

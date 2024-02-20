@@ -9,8 +9,8 @@ import Link from 'next/link'
 
 import DeleteCompanyModal from './modals/DeleteCompanyModal'
 import EditCompanyModal from './modals/EditCompanyModal'
-import { useGetAllCompaniesQuery } from '@/app/_services/basic/companies-api'
 import MainTable from '@/components/table/MainTable'
+import { useGetAllCompaniesQuery } from '@/lib/_services/basic/companies-api'
 import { Company } from '@/schemas/basic/companies/companies.interface'
 
 const CompaniesTable = () => {

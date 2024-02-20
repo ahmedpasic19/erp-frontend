@@ -4,9 +4,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-import { useDelteStorageMutation } from '@/app/_services/basic/storages-api'
 import Button from '@/components/root/button'
 import Modal from '@/components/root/modal'
+import { useDelteStorageMutation } from '@/lib/_services/basic/storages-api'
 
 const DeleteStorageModal = () => {
    const searchParams = useSearchParams()

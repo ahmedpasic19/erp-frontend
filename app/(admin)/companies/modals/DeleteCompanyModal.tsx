@@ -4,9 +4,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-import { useDelteCompanyMutation } from '@/app/_services/basic/companies-api'
 import Button from '@/components/root/button'
 import Modal from '@/components/root/modal'
+import { useDelteCompanyMutation } from '@/lib/_services/basic/companies-api'
 
 const DeleteCompanyModal = () => {
    const searchParams = useSearchParams()

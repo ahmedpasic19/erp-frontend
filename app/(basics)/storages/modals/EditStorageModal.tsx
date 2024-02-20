@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 
 import StoragesForm from '../storages-form'
 
-import { useGetOneStorageQuery } from '@/app/_services/basic/storages-api'
 import Modal from '@/components/root/modal'
+import { useGetOneStorageQuery } from '@/lib/_services/basic/storages-api'
 import { Storage } from '@/schemas/basic/storages/storages.interface'
 
 const EditStorageModal = () => {

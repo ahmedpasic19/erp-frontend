@@ -8,12 +8,12 @@ import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
+import Button from '@/components/root/button'
+import TextField from '@/components/root/text-filed'
 import {
    useCreateCompanyMutation,
    useUpdateCompanyMutation,
-} from '@/app/_services/basic/companies-api'
-import Button from '@/components/root/button'
-import TextField from '@/components/root/text-filed'
+} from '@/lib/_services/basic/companies-api'
 import { Company } from '@/schemas/basic/companies/companies.interface'
 import {
    createCopmanySchema,

@@ -3,7 +3,7 @@
 import { signOut, useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 
-import { useRemoveCurrentCompanyMutation } from '@/app/_services/basic/users-api'
+import { useRemoveCurrentCompanyMutation } from '@/lib/_services/basic/users-api'
 
 const AuthBtns = () => {
    const { data: session, status } = useSession()

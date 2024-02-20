@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { useSetCurrentCompanyMutation } from '@/app/_services/basic/users-api'
 import Button from '@/components/root/button'
 import SelectField from '@/components/root/select-field'
+import { useSetCurrentCompanyMutation } from '@/lib/_services/basic/users-api'
 import { Company } from '@/schemas/basic/companies/companies.interface'
 import { setComanySchema } from '@/schemas/basic/users/set-company.schema'
 
