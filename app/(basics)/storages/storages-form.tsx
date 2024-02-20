@@ -4,17 +4,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import React from 'react'
 
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { useGetAllCompaniesQuery } from '@/app/_services/basic/companies-api'
 import {
    useCreateStorageMutation,
    useUpdateStorageMutation,
 } from '@/app/_services/basic/storages-api'
 import Button from '@/components/root/button'
-import SelectField from '@/components/root/select-field'
 import TextField from '@/components/root/text-filed'
 import { Storage } from '@/schemas/basic/storages/storages.interface'
 import { createStorageSchema, updateStorageSchema } from '@/schemas/basic/storages/storages.schema'
@@ -25,25 +24,22 @@ type TProps = {
 }
 
 const StoragesForm = ({ isEdit, storage }: TProps) => {
+   const session = useSession()
+
    const methods = useForm<createStorageSchema>({
       resolver: zodResolver(isEdit ? updateStorageSchema : createStorageSchema),
-      values: isEdit && storage ? storage : ({} as Storage),
+      values:
+         isEdit && storage
+            ? storage
+            : ({ companies_id: session?.data?.user.current_company_id } as Storage),
    })
 
-   const { handleSubmit, reset, setValue, watch } = methods
+   const { handleSubmit, reset } = methods
 
    const router = useRouter()
 
    const [createStorage, { isLoading: loadingCreate }] = useCreateStorageMutation()
    const [updateStorage, { isLoading: loadingUpdate }] = useUpdateStorageMutation()
-
-   const { data: companiesData } = useGetAllCompaniesQuery()
-
-   const companyOptions =
-      companiesData?.companies?.map((company) => ({
-         label: company.name,
-         value: company.id,
-      })) || []
 
    const onSubmit: SubmitHandler<createStorageSchema> = async (data) => {
       try {
@@ -73,17 +69,7 @@ const StoragesForm = ({ isEdit, storage }: TProps) => {
             onSubmit={handleSubmit(onSubmit)}
          >
             <TextField name="name" label="Name" autoComplete="off" autoFocus={isEdit} />
-            <SelectField
-               label="Company"
-               name="companies_id"
-               options={companyOptions}
-               onChange={(option) => {
-                  if (option) setValue('companies_id', +option.value)
-               }}
-               value={
-                  companyOptions.find((company) => company.value === watch('companies_id')) || null
-               }
-            />
+
             <div className="mt-6">
                <Button
                   type="submit"
