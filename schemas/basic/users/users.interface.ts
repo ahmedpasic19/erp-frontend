@@ -5,5 +5,7 @@ export interface User {
    name: string
    password: string
    email: string
+   type: 'USER' | 'CLIENT'
+   current_company_id: number
    companies: UsersInCompanies[]
 }

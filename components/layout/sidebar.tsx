@@ -24,6 +24,10 @@ const Sidebar = () => {
          title: 'Storages',
          href: '/storages',
       },
+      {
+         title: 'Clients',
+         href: '/clients',
+      },
    ]
 
    return (

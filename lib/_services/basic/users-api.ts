@@ -1,5 +1,6 @@
 import { api } from '..'
 
+import { createClientSchema, updateClientSchema } from '@/schemas/basic/users/clients.schema'
 import { User } from '@/schemas/basic/users/users.interface'
 import { createUserSchema, updateUserSchema } from '@/schemas/basic/users/users.schema'
 
@@ -13,7 +14,10 @@ export const usersApi = api.injectEndpoints({
          }),
          invalidatesTags: ['User'],
       }),
-      updateUser: builder.mutation<{ message: string }, { body: updateUserSchema }>({
+      updateUser: builder.mutation<
+         { message: string },
+         { body: updateUserSchema | updateClientSchema }
+      >({
          query: ({ body }) => ({
             url: `/users/${body.id}`,
             method: 'PUT',
@@ -58,6 +62,20 @@ export const usersApi = api.injectEndpoints({
          }),
          invalidatesTags: ['User'],
       }),
+      createClient: builder.mutation<{ message: string }, { body: createClientSchema }>({
+         query: ({ body }) => ({
+            url: `/users/create-client`,
+            method: 'POST',
+            body,
+         }),
+         invalidatesTags: ['User'],
+      }),
+      getAllCompaniesClients: builder.query<{ clients: User[] }, { companies_id: number }>({
+         query: ({ companies_id }) => ({
+            url: `/users/companies-clients/${companies_id}`,
+         }),
+         providesTags: ['User'],
+      }),
    }),
 })
 
@@ -69,4 +87,6 @@ export const {
    useGetOneUserQuery,
    useSetCurrentCompanyMutation,
    useRemoveCurrentCompanyMutation,
+   useCreateClientMutation,
+   useGetAllCompaniesClientsQuery,
 } = usersApi
