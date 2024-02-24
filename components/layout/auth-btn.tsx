@@ -1,7 +1,6 @@
 'use client'
 
 import { signOut, useSession } from 'next-auth/react'
-import toast from 'react-hot-toast'
 
 import { useRemoveCurrentCompanyMutation } from '@/lib/_services/basic/users-api'
 
@@ -11,13 +10,8 @@ const AuthBtns = () => {
    const [removeCurrenctCompany] = useRemoveCurrentCompanyMutation()
 
    const handleSignout = async () => {
-      try {
-         await removeCurrenctCompany({ id: session?.user.id }).unwrap()
-         signOut()
-      } catch (error) {
-         // @ts-expect-error // error type
-         toast.error(error.data.message)
-      }
+      removeCurrenctCompany({ id: session?.user.id }).unwrap()
+      signOut()
    }
 
    if (status === 'authenticated') {
