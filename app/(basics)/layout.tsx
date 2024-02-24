@@ -19,14 +19,12 @@ export const metadata: Metadata = {
 
 export default function HomeLayout(props: TProps) {
    return (
-      <html lang="en" suppressHydrationWarning>
-         <body className={inter.className}>
-            <Navbar />
-            <div className="grid grid-cols-[minmax(15%,3rem)_auto]">
-               <Sidebar />
-               <main>{props.children}</main>
-            </div>
-         </body>
-      </html>
+      <div className={inter.className}>
+         <Navbar />
+         <div className="grid grid-cols-[minmax(15%,3rem)_auto]">
+            <Sidebar />
+            <main>{props.children}</main>
+         </div>
+      </div>
    )
 }

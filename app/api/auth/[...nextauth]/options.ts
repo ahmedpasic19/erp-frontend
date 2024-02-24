@@ -70,13 +70,10 @@ export const options: AuthOptions = {
    callbacks: {
       session: async ({ session, token }) => {
          // get user companies
-         const userCompanies = await db.companies.findMany({
-            where: {
-               users_in_companies: {
-                  every: {
-                     user_id: token.sub as string,
-                  },
-               },
+         const userCompanies = await db.users_in_companies.findMany({
+            where: { user_id: token.sub },
+            include: {
+               companies: true,
             },
          })
 
@@ -87,7 +84,7 @@ export const options: AuthOptions = {
 
          if (session?.user) {
             session.user.id = token.sub
-            session.user.companies = userCompanies
+            session.user.companies = userCompanies.map((item) => item.companies)
             session.user.current_company_id = oneUser?.current_company_id
          }
 

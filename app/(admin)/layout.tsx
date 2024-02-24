@@ -13,20 +13,18 @@ type TProps = {
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-   title: 'Dashboard | NextJS Enterprise',
-   description: 'Dashboard | NextJS ERP System',
+   title: 'Admin Dashboard | NextJS Enterprise',
+   description: 'Admin Dashboard | NextJS ERP System',
 }
 
 export default function HomeLayout(props: TProps) {
    return (
-      <html lang="en" suppressHydrationWarning>
-         <body className={inter.className}>
-            <Navbar />
-            <div className="grid grid-cols-[minmax(15%,3rem)_auto]">
-               <Sidebar />
-               <main>{props.children}</main>
-            </div>
-         </body>
-      </html>
+      <div className={inter.className}>
+         <Navbar />
+         <div className="grid grid-cols-[minmax(15%,3rem)_auto]">
+            <Sidebar />
+            <main>{props.children}</main>
+         </div>
+      </div>
    )
 }
