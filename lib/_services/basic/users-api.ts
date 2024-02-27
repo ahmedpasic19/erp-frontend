@@ -76,6 +76,15 @@ export const usersApi = api.injectEndpoints({
          }),
          providesTags: ['User'],
       }),
+      getCompaniesClientsByName: builder.query<
+         { clients: User[] },
+         { companies_id: number; name: string }
+      >({
+         query: ({ companies_id, name }) => ({
+            url: `/users/companies-clients/by-name/${companies_id}/${name}`,
+         }),
+         providesTags: ['User'],
+      }),
    }),
 })
 
@@ -89,4 +98,5 @@ export const {
    useRemoveCurrentCompanyMutation,
    useCreateClientMutation,
    useGetAllCompaniesClientsQuery,
+   useLazyGetCompaniesClientsByNameQuery,
 } = usersApi

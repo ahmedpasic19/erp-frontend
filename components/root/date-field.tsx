@@ -43,7 +43,7 @@ const DateField = ({ label, onChange, ...props }: TProps) => {
                   placeholderText={props.placeholder ? props.placeholder : 'Choose date'}
                   dateFormat="dd.MM.yyyy"
                   autoComplete="off"
-                  className="outline-none p-2.5 dark:text-my-gray-900 placeholder:dark:text-my-gray-900 w-full"
+                  className="rounded-md outline-none p-2 border-2 border-gray-100 dark:border-my-gray-300 dark:text-my-gray-900 placeholder:dark:text-my-gray-900 w-full"
                />
             )}
          />
