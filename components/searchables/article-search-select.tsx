@@ -1,13 +1,15 @@
 'use client'
 
-import React, { memo } from 'react'
+import React from 'react'
 
+import { useSession } from 'next-auth/react'
 import { GroupBase, OptionsOrGroups } from 'react-select'
 import { AsyncProps } from 'react-select/async'
 
 import SearchSelectField from '../root/search-select-field'
 
-import { useLazyGetCompaniesClientsByNameQuery } from '@/lib/_services/basic/users-api'
+import { useLazyGetArticlesByNameQuery } from '@/lib/_services/basic/articles-api'
+import { Article } from '@/schemas/basic/articles/articles.interface'
 import { User } from '@/schemas/basic/users/users.interface'
 import { debounce } from '@/utils/common'
 
@@ -17,33 +19,33 @@ type TProps<
    Group extends GroupBase<Option> = GroupBase<Option>,
 > = AsyncProps<Option, IsMulti, Group> & {
    label: string
-   companyId: number
 }
 
-const ClientSearchSelect = <
+const ArticleSearchSelect = <
    Option,
    IsMulti extends boolean = false,
    Group extends GroupBase<Option> = GroupBase<Option>,
 >({
    label,
-   companyId,
    ...props
 }: TProps<Option, IsMulti, Group>) => {
-   const [getClientsByName] = useLazyGetCompaniesClientsByNameQuery()
+   const session = useSession()
+
+   const [getArticlesByName] = useLazyGetArticlesByNameQuery()
 
    const getData = debounce(
       async (
          inputValue: string,
          // eslint-disable-next-line
-         callback: (options: OptionsOrGroups<User, GroupBase<User>>) => void,
+         callback: (options: OptionsOrGroups<Article, GroupBase<Article>>) => void,
       ) => {
          try {
-            const data = await getClientsByName({
-               companies_id: companyId,
-               name: inputValue?.length ? inputValue : 'ANY_CLIENTS',
+            const data = await getArticlesByName({
+               companies_id: session.data?.user?.current_company_id,
+               name: inputValue?.length ? inputValue : 'ANY_ARTICLES',
             }).unwrap()
 
-            callback(data.clients)
+            callback(data.articles)
          } catch (error) {
             // @ts-expect-error // ignore error type
             toast.error(error.data.message)
@@ -65,4 +67,4 @@ const ClientSearchSelect = <
    )
 }
 
-export default memo(ClientSearchSelect)
+export default ArticleSearchSelect
