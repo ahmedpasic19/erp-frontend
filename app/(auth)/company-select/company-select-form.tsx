@@ -43,19 +43,15 @@ const CompanySelectForm = () => {
          const res = await setCurrentCompany(data).unwrap()
          if (res.message && session.data) {
             router.push('/')
-            session
-               .update({
-                  ...session,
-                  ...{
-                     data: {
-                        ...session.data,
-                        ...{ user: { ...session.data.user }, current_company_id: data.company_id },
-                     },
+            session.update({
+               ...session,
+               ...{
+                  data: {
+                     ...session.data,
+                     ...{ user: { ...session.data.user }, current_company_id: data.company_id },
                   },
-               })
-               .then((res) => {
-                  console.log(res?.user)
-               })
+               },
+            })
          }
       } catch (error) {
          // @ts-expect-error // error type

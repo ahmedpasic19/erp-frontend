@@ -28,6 +28,9 @@ const DateField = ({ label, onChange, ...props }: TProps) => {
          <Controller
             name={props.name!}
             control={control}
+            rules={{
+               required: true,
+            }}
             render={({ field }) => (
                <ReactDatePicker
                   {...field}
@@ -37,9 +40,13 @@ const DateField = ({ label, onChange, ...props }: TProps) => {
                         ? onChange
                         : (date: Date) => {
                              setValue(props.name, date)
-                             console.log(props.name, date)
                           }
                   }
+                  ref={(ref) => {
+                     field.ref({
+                        focus: ref?.setFocus,
+                     })
+                  }}
                   placeholderText={props.placeholder ? props.placeholder : 'Choose date'}
                   dateFormat="dd.MM.yyyy"
                   autoComplete="off"
