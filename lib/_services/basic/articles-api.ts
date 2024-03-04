@@ -40,6 +40,15 @@ export const articlesApi = api.injectEndpoints({
          }),
          providesTags: ['Article'],
       }),
+      getArticlesByName: builder.query<
+         { articles: Article[] },
+         { companies_id: number; name: string }
+      >({
+         query: ({ name, companies_id }) => ({
+            url: `/articles/by-name/${companies_id}/${name}`,
+         }),
+         providesTags: ['Article'],
+      }),
    }),
 })
 
@@ -49,4 +58,5 @@ export const {
    useDelteArticleMutation,
    useGetOneArticleQuery,
    useGetAllArticlesQuery,
+   useLazyGetArticlesByNameQuery,
 } = articlesApi
