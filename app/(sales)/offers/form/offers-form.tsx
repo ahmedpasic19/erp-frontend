@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useSession } from 'next-auth/react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -22,10 +22,11 @@ type TProps = {
    isEdit?: boolean
    offer?: Offer
    setOfferId: React.Dispatch<React.SetStateAction<number>>
-   offerId: number
+   offerId?: number
+   changeKey?: boolean
 }
 
-const OffersForm = ({ isEdit, offer, setOfferId, offerId }: TProps) => {
+const OffersForm = ({ isEdit, offer, setOfferId, offerId, changeKey }: TProps) => {
    const session = useSession()
    const methods = useForm<createOfferSchema>({
       resolver: zodResolver(isEdit || offerId ? updateOfferSchema : createOfferSchema),
@@ -70,22 +71,22 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId }: TProps) => {
             // Don't send offer_articles
             // eslint-disable-next-line
             const { offer_articles, ...rest } = offer
-
             await updateOffer({ body: { ...rest, ...data } }).unwrap()
-         }
-         if (!isEdit && !offerId) {
+         } else {
             const response = await createOffer({ body: data }).unwrap()
-
-            // Set ID after POST to use on offer-article-form
             setOfferId(response.offer.id)
          }
 
-         toast.success('Succesfully saved')
+         toast.success('Successfully saved')
       } catch (error) {
          // @ts-expect-error // error type
-         toast.error(error.data.message)
+         toast.error(error?.data?.message || 'An error occurred')
       }
    }
+
+   useEffect(() => {
+      methods.reset()
+   }, [changeKey])
 
    return (
       <FormProvider {...methods}>
