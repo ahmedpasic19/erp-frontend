@@ -8,6 +8,8 @@ import React, { useMemo } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 
+import DeleteOfferModal from '../modals/DeleteOfferModal'
+
 import MainTable from '@/components/table/MainTable'
 import { useGetAllCompaniesOffersQuery } from '@/lib/_services/sales/offers-api'
 import { Offer } from '@/schemas/sales/offers/offer.interface'
@@ -84,6 +86,8 @@ const OffersTable = () => {
    return (
       <>
          <MainTable data={tableData} columns={columns} showNavigation />
+
+         <DeleteOfferModal />
       </>
    )
 }
