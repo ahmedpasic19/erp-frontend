@@ -12,6 +12,7 @@ type TProps<
    Group extends GroupBase<Option> = GroupBase<Option>,
 > = Props<Option, IsMulti, Group> & {
    label: string
+   nameOption?: string
 }
 
 const SelectField = <
@@ -20,6 +21,7 @@ const SelectField = <
    Group extends GroupBase<Option> = GroupBase<Option>,
 >({
    label,
+   nameOption,
    ...props
 }: TProps<Option, IsMulti, Group>) => {
    const {
@@ -69,13 +71,20 @@ const SelectField = <
                      }),
                      singleValue: (provided) => ({
                         ...provided,
-                        color: isDarkMode ? '#9B9B9B' : 'gray',
+                        color: isDarkMode ? '#9B9B9B' : 'black',
                      }),
                      menu: (provided) => ({
                         ...provided,
                         backgroundColor: isDarkMode ? '3B3B3B' : 'white',
                      }),
                   }}
+                  value={
+                     !props.isMulti && nameOption
+                        ? { label: nameOption, value: field.value }
+                        : props.isMulti && nameOption
+                        ? nameOption
+                        : null
+                  }
                />
             )}
          />

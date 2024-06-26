@@ -32,12 +32,7 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId, changeKey }: TProps) =
       resolver: zodResolver(isEdit || offerId ? updateOfferSchema : createOfferSchema),
       values:
          (isEdit && offer) || (offerId && offer)
-            ? {
-                 ...offer,
-                 date_of_order: format(new Date(offer.date_of_order), 'dd.MM.yyyy'),
-                 payment_due_date: format(new Date(offer.payment_due_date), 'dd.MM.yyyy'),
-                 delivery_due_date: format(new Date(offer.delivery_due_date), 'dd.MM.yyyy'),
-              }
+            ? { ...offer }
             : ({
                  worker_id: session?.data?.user?.id,
                  companies_id: session?.data?.user?.current_company_id,
@@ -98,6 +93,7 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId, changeKey }: TProps) =
                onChange={(option: User | null) => {
                   if (option) setValue('client_id', option.id)
                }}
+               nameOption={methods.watch('client.name')}
             />
             <CurrenciesSelect
                label="Currency"
@@ -105,6 +101,7 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId, changeKey }: TProps) =
                onChange={(option: { label: string; value: number } | null) => {
                   if (option) setValue('currencies_id', option.value)
                }}
+               nameOption={methods.watch('currency.name')}
             />
             <DateField label="Date of order" name="date_of_order" />
             <DateField label="Payment due date" name="payment_due_date" />

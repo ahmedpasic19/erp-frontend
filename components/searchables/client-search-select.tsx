@@ -18,6 +18,7 @@ type TProps<
 > = AsyncProps<Option, IsMulti, Group> & {
    label: string
    companyId: number
+   nameOption?: string
 }
 
 const ClientSearchSelect = <
@@ -27,6 +28,7 @@ const ClientSearchSelect = <
 >({
    label,
    companyId,
+   nameOption,
    ...props
 }: TProps<Option, IsMulti, Group>) => {
    const [getClientsByName] = useLazyGetCompaniesClientsByNameQuery()
@@ -61,6 +63,7 @@ const ClientSearchSelect = <
          defaultOptions
          getOptionLabel={(option: User) => option.name}
          getOptionValue={(option: User) => option.id}
+         nameOption={nameOption}
       />
    )
 }

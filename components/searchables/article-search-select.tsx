@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 import { GroupBase, OptionsOrGroups } from 'react-select'
 import { AsyncProps } from 'react-select/async'
 
