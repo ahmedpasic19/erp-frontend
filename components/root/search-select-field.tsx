@@ -13,6 +13,7 @@ type TProps<
    Group extends GroupBase<Option> = GroupBase<Option>,
 > = AsyncProps<Option, IsMulti, Group> & {
    label: string
+   nameOption?: string
 }
 
 const SearchSelectField = <
@@ -21,6 +22,7 @@ const SearchSelectField = <
    Group extends GroupBase<Option> = GroupBase<Option>,
 >({
    label,
+   nameOption,
    ...props
 }: TProps<Option, IsMulti, Group>) => {
    const {
@@ -31,6 +33,7 @@ const SearchSelectField = <
    const { resolvedTheme } = useTheme()
 
    const isDarkMode = resolvedTheme === 'dark'
+
    return (
       <fieldset>
          <label className="font-semibold dark:text-my-gray-900 text-gray-900 ">{label}</label>
@@ -69,13 +72,24 @@ const SearchSelectField = <
                      }),
                      singleValue: (provided) => ({
                         ...provided,
-                        color: isDarkMode ? '#9B9B9B' : 'gray',
+                        color: isDarkMode ? '#9B9B9B' : 'black',
+                     }),
+                     placeholder: (base) => ({
+                        ...base,
+                        color: '#9B9B9B',
                      }),
                      menu: (provided) => ({
                         ...provided,
                         backgroundColor: isDarkMode ? '3B3B3B' : 'white',
                      }),
                   }}
+                  value={
+                     !props.isMulti && nameOption
+                        ? { label: nameOption, value: field.value }
+                        : props.isMulti && nameOption
+                        ? nameOption
+                        : null
+                  }
                />
             )}
          />

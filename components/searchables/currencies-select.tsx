@@ -12,6 +12,7 @@ type TProps<
    Group extends GroupBase<Option> = GroupBase<Option>,
 > = Props<Option, IsMulti, Group> & {
    label: string
+   nameOption?: string
 }
 
 const CurrenciesSelect = <
@@ -20,6 +21,7 @@ const CurrenciesSelect = <
    Group extends GroupBase<Option> = GroupBase<Option>,
 >({
    label,
+   nameOption,
    ...props
 }: TProps<Option, IsMulti, Group>) => {
    const { data } = useGetAllCurrenciesQuery()
@@ -29,7 +31,14 @@ const CurrenciesSelect = <
       value: cur.id,
    }))
 
-   return <SelectField label={label ?? 'Currency'} {...props} options={currency_options} />
+   return (
+      <SelectField
+         label={label ?? 'Currency'}
+         {...props}
+         options={currency_options}
+         nameOption={nameOption}
+      />
+   )
 }
 
 export default CurrenciesSelect

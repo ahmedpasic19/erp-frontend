@@ -8,7 +8,7 @@ export default function OffersPage() {
       <div className="page">
          <OfferFormSlide />
 
-         <div className="mt-5 w-full">
+         <div className="w-full">
             <OffersTable />
          </div>
       </div>

@@ -8,6 +8,8 @@ import React, { useMemo } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 
+import DeleteOfferModal from '../modals/DeleteOfferModal'
+
 import MainTable from '@/components/table/MainTable'
 import { useGetAllCompaniesOffersQuery } from '@/lib/_services/sales/offers-api'
 import { Offer } from '@/schemas/sales/offers/offer.interface'
@@ -64,13 +66,13 @@ const OffersTable = () => {
             header: 'Actions',
             accessorKey: 'actions',
             cell: ({ row }) => {
-               const company = row.original
+               const offer = row.original
                return (
                   <div className="flex justify-center gap-2">
-                     <Link href={`?companyId=${company.id}`}>
+                     <Link href={`/offers/${offer.id}/edit`}>
                         <Pencil1Icon className="dark:text-gray-200 w-5 h-5" />
                      </Link>
-                     <Link href={`?dId=${company.id}`}>
+                     <Link href={`?dId=${offer.id}`}>
                         <TrashIcon className="dark:text-gray-200 w-5 h-5" />
                      </Link>
                   </div>
@@ -84,6 +86,8 @@ const OffersTable = () => {
    return (
       <>
          <MainTable data={tableData} columns={columns} showNavigation />
+
+         <DeleteOfferModal />
       </>
    )
 }

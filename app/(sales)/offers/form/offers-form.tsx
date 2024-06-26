@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useSession } from 'next-auth/react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -22,21 +22,17 @@ type TProps = {
    isEdit?: boolean
    offer?: Offer
    setOfferId: React.Dispatch<React.SetStateAction<number>>
-   offerId: number
+   offerId?: number
+   changeKey?: boolean
 }
 
-const OffersForm = ({ isEdit, offer, setOfferId, offerId }: TProps) => {
+const OffersForm = ({ isEdit, offer, setOfferId, offerId, changeKey }: TProps) => {
    const session = useSession()
    const methods = useForm<createOfferSchema>({
       resolver: zodResolver(isEdit || offerId ? updateOfferSchema : createOfferSchema),
       values:
          (isEdit && offer) || (offerId && offer)
-            ? {
-                 ...offer,
-                 date_of_order: format(new Date(offer.date_of_order), 'dd.MM.yyyy'),
-                 payment_due_date: format(new Date(offer.payment_due_date), 'dd.MM.yyyy'),
-                 delivery_due_date: format(new Date(offer.delivery_due_date), 'dd.MM.yyyy'),
-              }
+            ? { ...offer }
             : ({
                  worker_id: session?.data?.user?.id,
                  companies_id: session?.data?.user?.current_company_id,
@@ -70,22 +66,22 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId }: TProps) => {
             // Don't send offer_articles
             // eslint-disable-next-line
             const { offer_articles, ...rest } = offer
-
             await updateOffer({ body: { ...rest, ...data } }).unwrap()
-         }
-         if (!isEdit && !offerId) {
+         } else {
             const response = await createOffer({ body: data }).unwrap()
-
-            // Set ID after POST to use on offer-article-form
             setOfferId(response.offer.id)
          }
 
-         toast.success('Succesfully saved')
+         toast.success('Successfully saved')
       } catch (error) {
          // @ts-expect-error // error type
-         toast.error(error.data.message)
+         toast.error(error?.data?.message || 'An error occurred')
       }
    }
+
+   useEffect(() => {
+      methods.reset()
+   }, [changeKey])
 
    return (
       <FormProvider {...methods}>
@@ -97,6 +93,7 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId }: TProps) => {
                onChange={(option: User | null) => {
                   if (option) setValue('client_id', option.id)
                }}
+               nameOption={methods.watch('client.name')}
             />
             <CurrenciesSelect
                label="Currency"
@@ -104,6 +101,7 @@ const OffersForm = ({ isEdit, offer, setOfferId, offerId }: TProps) => {
                onChange={(option: { label: string; value: number } | null) => {
                   if (option) setValue('currencies_id', option.value)
                }}
+               nameOption={methods.watch('currency.name')}
             />
             <DateField label="Date of order" name="date_of_order" />
             <DateField label="Payment due date" name="payment_due_date" />

@@ -9,6 +9,18 @@ export const createOfferSchema = z.object({
    currencies_id: z.coerce.number().min(1, 'Must provide currencyId'),
    companies_id: z.coerce.number().min(1, 'Must provide companyId'),
    vat: z.coerce.number().min(0, "Value can't be bellow 0").max(100, 'Max 100%'),
+   client: z
+      .object({
+         id: z.number(),
+         name: z.string(),
+      })
+      .optional(),
+   currency: z
+      .object({
+         id: z.number(),
+         name: z.string(),
+      })
+      .optional(),
 })
 
 export const updateOfferSchema = createOfferSchema.extend({

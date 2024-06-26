@@ -9,8 +9,8 @@ const Button = ({ isLoading, white, ...props }: TProps) => {
    return (
       <button
          className={`w-full rounded-md ${
-            white ? ' border-2 border-black bg-white text-black' : 'bg-black'
-         } p-2 text-white disabled:bg-gray-600`}
+            white ? 'border-2 border-black bg-white text-black' : 'bg-black text-white'
+         } p-2 disabled:bg-gray-600`}
          {...props}
       >
          {!isLoading ? props.children : 'Loading...'}

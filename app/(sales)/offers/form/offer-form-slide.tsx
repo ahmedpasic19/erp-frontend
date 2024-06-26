@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { useRouter } from 'next/navigation'
 
 import OfferArticleTable from '../tables/offer-article-table'
 
@@ -9,28 +11,68 @@ import OffersForm from './offers-form'
 import Button from '@/components/root/button'
 import { useGetOneOfferQuery } from '@/lib/_services/sales/offers-api'
 
-const OfferFormSlide = () => {
+type TProps = {
+   isEdit?: boolean
+   offerId?: number
+}
+
+const OfferFormSlide = ({ isEdit, offerId: editOfferId }: TProps) => {
+   const [openForm, setOpenForm] = useState(false)
    const [offerId, setOfferId] = useState(0)
+   const [changeKey, setChangeKey] = useState(false)
 
    const { data } = useGetOneOfferQuery({ id: offerId }, { skip: !offerId })
 
+   const router = useRouter()
+
+   const onFinish = () => {
+      setOfferId(0)
+      setChangeKey((prev) => !prev)
+      setOpenForm(false)
+
+      isEdit && router.push('/offers')
+   }
+
+   useEffect(() => {
+      if (isEdit && editOfferId) {
+         setOpenForm(true)
+         setOfferId(editOfferId)
+      }
+   }, [])
+
    return (
-      <div className="w-full bg-white dark:bg-my-gray-100 shadow-2xl p-4">
-         <OffersForm setOfferId={setOfferId} offerId={offerId} offer={data?.offer} />
-         <hr className="w-full mt-10 p-2" />
-         {offerId ? (
-            <>
-               {' '}
-               <OfferArticleForm offerId={offerId} />
-               <div className="mt-2">
-                  <OfferArticleTable offerId={offerId} />
+      <>
+         <div className="w-full p-4 flex flex-col justify-start items-start">
+            {!isEdit && (
+               <div className="max-w-6xl">
+                  <Button onClick={() => setOpenForm((prev) => !prev)}>Add Offer</Button>
                </div>
-               <div>
-                  <Button onClick={() => setOfferId(0)}>Finish</Button>
+            )}
+            {openForm && (
+               <div className="w-full mt-4">
+                  <OffersForm
+                     setOfferId={setOfferId}
+                     offer={offerId ? data?.offer : undefined}
+                     isEdit={offerId && isEdit ? true : false}
+                     changeKey={changeKey}
+                  />
+
+                  {offerId ? (
+                     <>
+                        <hr className="w-full mt-10 p-2" />
+                        <OfferArticleForm offerId={offerId} />
+                        <div className="mt-2">
+                           <OfferArticleTable offerId={offerId} />
+                        </div>
+                        <div>
+                           <Button onClick={onFinish}>Finish</Button>
+                        </div>
+                     </>
+                  ) : null}
                </div>
-            </>
-         ) : null}
-      </div>
+            )}
+         </div>
+      </>
    )
 }
 
