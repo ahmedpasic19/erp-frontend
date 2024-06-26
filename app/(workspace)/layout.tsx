@@ -26,7 +26,9 @@ export default function WorkspaceLayout(props: TProps) {
                <div className="h-10"></div>
                <div className="grid grid-cols-[minmax(20%,3rem)_auto]">
                   <Sidebar />
-                  <main className="p-2 border-1 border-gray-100 rounded-2xl">{props.children}</main>
+                  <main className="p-5 border-1 border-gray-100 dark:border-gray-800 rounded-2xl">
+                     {props.children}
+                  </main>
                </div>
             </div>
          </div>
