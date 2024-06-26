@@ -49,8 +49,8 @@ const Sidebar = () => {
                <Link
                   key={Math.random()}
                   href={page.href}
-                  className={`capitaliz ${
-                     pathname === page.href ? 'underline underline-offset-2' : ''
+                  className={`underline-offset-2 ${
+                     pathname === page.href ? 'underline' : 'hover:underline'
                   }`}
                >
                   {page.title}

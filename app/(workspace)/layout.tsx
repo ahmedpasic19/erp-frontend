@@ -17,7 +17,7 @@ export const metadata: Metadata = {
    description: 'Offers | NextJS ERP System',
 }
 
-export default function SalesLayout(props: TProps) {
+export default function WorkspaceLayout(props: TProps) {
    return (
       <div className={inter.className}>
          <Navbar />
