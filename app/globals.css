@@ -17,5 +17,9 @@
 } */
 
 .page {
-   @apply flex min-h-screen w-full flex-col items-center bg-white p-10 dark:bg-dark;
+   @apply flex min-h-screen w-full flex-col items-center bg-white dark:bg-dark;
+}
+main {
+   font-size: 0.9rem;
+   color: rgb(83, 83, 83);
 }

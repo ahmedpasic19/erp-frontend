@@ -26,6 +26,9 @@ const config: Config = {
                900: '#9B9B9B',
             },
          },
+         borderWidth: {
+            1: '1px',
+         },
       },
    },
    plugins: [],
